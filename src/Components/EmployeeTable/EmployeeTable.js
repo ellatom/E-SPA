@@ -11,8 +11,8 @@ class EmployeeTable extends Component {
     state = { tableData: [] };
 
     //set table data from json
-    async componentDidMount() {
-        await this.setState({ tableData: data });
+    componentDidMount() {
+        this.setState({ tableData: data });
     }
     //set table title
     getTitle = () => {
@@ -37,6 +37,7 @@ class EmployeeTable extends Component {
     getRows = () => {
         const { tableData } = this.state;
         let filteredData = utilsData().getFilteredDataByKeys(tableData);
+
         return filteredData;
     }
 
