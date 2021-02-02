@@ -1,10 +1,15 @@
 import './App.css';
-import EmployeeTable from '../EmployeeTable/EmployeeTable';
+import TemplateTable from '../TemplateTable/TemplateTable';
+
 
 function App() {
   return (
     <div className="App">
-      <EmployeeTable/>
+      <div className="table_container">
+        <div className="market">
+          <TemplateTable title="Market" table_key= "market_keys" />
+        </div>
+      </div>
     </div>
   );
 }

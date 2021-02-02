@@ -1,0 +1,26 @@
+.trades {
+  width: 1200px;
+  margin-right: 20px;
+}
+.users_logs {
+  width: 600px;
+}
+.table_container {
+  display: flex;
+  flex-direction: row;
+  padding:8px;
+}
+.Component-root-17.Demo-chart-15 {
+    margin-top: 10px;
+  height: 320px !important;
+  background: #5A5757;
+  color: white !important;
+}
+.MuiToolbar-root.MuiToolbar-regular.MTableToolbar-root-5.MuiToolbar-gutters{
+    height:50px !important;
+}
+button{
+  padding: 14px;
+    border-radius: 13px;
+    background-color: limegreen;
+}

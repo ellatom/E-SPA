@@ -9,7 +9,7 @@ const setOptions=()=>{
             left: 2
           },
         headerStyle: {
-            backgroundColor: '#01579b',
+            backgroundColor: 'rgb(90 87 87)',
             color: '#FFF'
         },
         cellStyle: {

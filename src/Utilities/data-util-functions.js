@@ -1,51 +1,37 @@
-import {keys}  from '../Data/config.js';
+import * as params from '../Data/config.js';
 
 //get keys/columns to display as columns in table
-const getKeys = () => {
-    return keys;
+const getKeys = (key) => {
+    return params[key];
 }
 
-//get age by epoch birthdate
-const getAge =(birthdate)=> {
-
-    let ageDifMs = Date.now() - birthdate.getTime();
-    let ageDate = new Date(ageDifMs);
-    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-
-    return age;
-}
 //convert epoch to date
-const getBirthdate = (birthdate) => {
-
-    let utcSeconds = birthdate;
+const getTradeDate = (trade_date) => {
+    let utcSeconds = trade_date;
     let date = new Date(0);
-    date.setUTCSeconds(utcSeconds);
-
+    date.setMilliseconds(utcSeconds);
     return date;
 }
 
 //capitalize only first letter
-const capitalizeFirstLetter=(key)=>
-{
+const capitalizeFirstLetter = (key) => {
     return key.charAt(0).toUpperCase() + key.slice(1);
 }
 //capitalize first letter and remove underscore
-const setTitleValue=(key)=>
-{
+const setTitleValue = (key) => {
     return capitalizeFirstLetter(key).replace("_", " ");
 }
 
-//set birthdate and age by birthdate
-const setBirthdateAndAge=(obj,key,value)=>{
+//set date
+const setTradeDate = (obj, key, value) => {
 
-    let date = getBirthdate(value);
+    let date = getTradeDate(Number(value));
     obj[key] = date.toLocaleDateString();
-    obj["age"] = getAge(date);
     return obj;
 }
-//get data to display in table accordingly to required keys((columns)),age calculculted by birthdate
-const getFilteredDataByKeys = (tableData) => {
-    let keys = getKeys();
+//get data to display in table accordingly to required key
+const getFilteredDataByKeys = (tableData, key) => {
+    let keys = getKeys(key);
 
     let result =
         tableData.map(item => {
@@ -53,13 +39,10 @@ const getFilteredDataByKeys = (tableData) => {
 
             keys.forEach(key => {
 
-                if (key === "birthdate") {
-                    obj = setBirthdateAndAge(obj,key,item[key]);
+                if (key === "timestamp") {
+                    obj = setTradeDate(obj, key, item[key]);
                     return;
                 }
-
-                if (key === "age") {return;}
-
                 if (item.hasOwnProperty(key))
                     obj[key] = item[key];
             })
@@ -68,13 +51,22 @@ const getFilteredDataByKeys = (tableData) => {
 
     return result;
 }
+const setDataToLocalStorage = (data) => {
+    localStorage.setItem("MarketTableDatabase", JSON.stringify(data));
+}
+const getDataFromLocalStorage = () => {
+    let db = JSON.parse(localStorage.getItem("MarketTableDatabase") || "[]");
+    return db;
+}
 export default function utils() {
-	return {
+    return {
         getKeys,
-		getAge,
-        getBirthdate,
+        getTradeDate,
+        setTradeDate,
         capitalizeFirstLetter,
         setTitleValue,
-		getFilteredDataByKeys
-	};
+        getFilteredDataByKeys,
+        setDataToLocalStorage,
+        getDataFromLocalStorage
+    };
 }
